@@ -49,7 +49,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/laporan/pdf', [TransactionController::class, 'exportPdf'])->name('laporan.pdf');
+Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
+Route::get('/laporan/pdf', [LaporanController::class, 'exportPdf'])->name('laporan.pdf');
 
 Route::get('/jalankan-migrasi', function() {
     Artisan::call('migrate:fresh', ['--force' => true]);

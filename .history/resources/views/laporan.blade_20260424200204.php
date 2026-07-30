@@ -13,11 +13,8 @@
         border-radius: 15px; display: flex; align-items: center; justify-content: center; 
         color: var(--montera-red); /* Ikut Tema */
         cursor: pointer; transition: 0.3s;
-        text-decoration: none;
     }
     .btn-filter-icon.reset { color: #555; } 
-    /* Style khusus tombol PDF agar bervariasi */
-    .btn-filter-icon.pdf { color: #f1c40f; border-color: rgba(241, 196, 15, 0.2); }
     .btn-filter-icon:active { transform: scale(0.9); background: #222; }
     
     /* Chart Section - Dinamis */
@@ -81,10 +78,6 @@
         </div>
         
         <div class="header-actions">
-            <a href="{{ route('laporan.pdf', request()->query()) }}" class="btn-filter-icon pdf" title="Export PDF">
-                <i class="fa-solid fa-file-pdf"></i>
-            </a>
-
             @if(request('start_date'))
                 <a href="{{ route('laporan') }}" class="btn-filter-icon reset" title="Reset Filter">
                     <i class="fa-solid fa-arrow-rotate-left"></i>

@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -51,35 +48,6 @@ public function report(Request $request)
     $expensePercent = $total > 0 ? ($totalExpense / $total) * 100 : 0;
 
     return view('laporan', compact('totalIncome', 'totalExpense', 'incomePercent', 'expensePercent'));
-}
-
-public function exportPdf(Request $request)
-{
-    $userId = auth()->id();
-    $query = Transaction::where('user_id', $userId);
-
-    if ($request->filled('start_date') && $request->filled('end_date')) {
-        $query->whereBetween('date', [$request->start_date, $request->end_date]);
-    }
-
-    $transactions = $query->orderBy('date', 'asc')->get();
-
-    $data = [
-        'transactions' => $transactions,
-        'totalIncome'  => $transactions->where('type', 'income')->sum('amount'),
-        'totalExpense' => $transactions->where('type', 'expense')->sum('amount'),
-        'periode'      => $request->start_date ? $request->start_date . ' s/d ' . $request->end_date : 'Semua Periode',
-        'date'         => Carbon::now()->translatedFormat('d F Y')
-    ];
-
-    // 1. Buat nama file unik dengan menyisipkan waktu saat ini (Timestamp)
-    // Format: Laporan_Montera_20260424_201530.pdf
-    $fileName = 'Laporan_Montera_' . Carbon::now()->format('Ymd_His') . '.pdf';
-
-    $pdf = Pdf::loadView('laporan.pdf', $data);
-
-    // 2. Masukkan variabel $fileName ke dalam fungsi download
-    return $pdf->download($fileName);
 }
 
     public function store(Request $request)

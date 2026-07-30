@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\SavingsGoalController; 
-use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\SavingsGoalController; 
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/laporan/pdf', [TransactionController::class, 'exportPdf'])->name('laporan.pdf');
+Route::get('/laporan/pdf', [LaporanController::class, 'exportPdf'])->name('laporan.pdf');
 
 Route::get('/jalankan-migrasi', function() {
     Artisan::call('migrate:fresh', ['--force' => true]);

@@ -37,8 +37,10 @@
         justify-content: center;
     }
     
-    /* WARNA ACTIVE DINAMIS */
-    .nav-btn.active { color: var(--montera-red); }
+    /* WARNA ACTIVE OTOMATIS IKUT PERSONALISASI */
+    .nav-btn.active { 
+        color: var(--montera-red); 
+    }
     
     .nav-btn span { 
         display: block; 
@@ -60,7 +62,7 @@
     .add-btn { 
         width: 62px; 
         height: 62px; 
-        /* Gradient mengikuti personalisasi */
+        /* GRADIENT IKUT TEMA */
         background: linear-gradient(135deg, var(--montera-red) 0%, #000 150%); 
         color: white; 
         border-radius: 50%; 
@@ -70,46 +72,46 @@
         margin-top: -55px; 
         border: 6px solid #0F0F0F; 
         font-size: 1.5rem; 
-        /* Shadow mengikuti personalisasi dengan variabel RGB */
+        /* GLOW EFFECT IKUT TEMA */
         box-shadow: 0 10px 20px rgba(var(--montera-red-rgb, 211, 47, 47), 0.4); 
         transition: 0.3s;
     }
     
     .add-btn:active { transform: scale(0.9); }
 
-    /* 4. MODAL LOGOUT STYLE */
-    .logout-overlay {
-        position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
-        display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px;
-    }
-    .logout-overlay.active { display: flex; }
-
-    .logout-card {
-        background: #121212; width: 100%; max-width: 320px; border-radius: 35px; padding: 30px;
-        text-align: center; border: 1px solid #222;
-        animation: popUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    @keyframes popUp {
-        from { transform: scale(0.8); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-    }
-
+    /* 4. MODAL LOGOUT TEMA */
     .logout-icon {
-        width: 55px; height: 55px;
+        width: 55px;
+        height: 55px;
         background: rgba(var(--montera-red-rgb, 211, 47, 47), 0.1);
         color: var(--montera-red);
-        border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        margin: 0 auto 20px; font-size: 1.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 1.5rem;
     }
 
-    .btn-batal { background: #1A1A1A; color: #777; border: 1px solid #222; padding: 14px; border-radius: 15px; font-weight: bold; cursor: pointer; }
-    
-    /* Tombol Keluar Ikut Tema */
     .btn-keluar { 
         background: var(--montera-red); 
-        color: white; border: none; padding: 14px; border-radius: 15px; 
-        font-weight: 900; cursor: pointer; transition: 0.3s;
+        color: white; 
+        border: none; 
+        padding: 14px; 
+        border-radius: 18px; 
+        font-weight: 900; 
+        cursor: pointer; 
+        transition: 0.3s;
+    }
+
+    .btn-batal { 
+        background: #1A1A1A; 
+        color: #777; 
+        border: 1px solid #222; 
+        padding: 14px; 
+        border-radius: 18px; 
+        font-weight: bold; 
+        cursor: pointer; 
     }
 </style>
 
@@ -146,9 +148,9 @@
         <div class="logout-icon">
             <i class="fa-solid fa-circle-exclamation"></i>
         </div>
-        <h3 style="color: white; font-weight: 900;">Yakin Ingin Keluar?</h3>
-        <p>Sesi Anda akan berakhir. Pastikan semua catatan keuangan sudah tersimpan.</p>
-        <div class="logout-actions">
+        <h3 style="color: white; font-weight: 900; margin-bottom: 8px;">Keluar Akun?</h3>
+        <p style="color: #555; font-size: 0.85rem; margin-bottom: 25px;">Pastikan semua transaksi hari ini sudah kamu catat ya!</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             <button class="btn-batal" onclick="hideLogoutConfirm()">Batal</button>
             <button class="btn-keluar" onclick="confirmLogout()">Keluar</button>
         </div>
@@ -160,21 +162,7 @@
 </form>
 
 <script>
-    // FUNGSI TEMA UNTUK NAVBAR (Ambil dari LocalStorage)
-    function syncNavbarTheme() {
-        const savedColor = localStorage.getItem('montera_theme_red') || '#D32F2F';
-        document.documentElement.style.setProperty('--montera-red', savedColor);
-        
-        // Konversi ke RGB untuk efek Shadow/Glow
-        const r = parseInt(savedColor.slice(1, 3), 16);
-        const g = parseInt(savedColor.slice(3, 5), 16);
-        const b = parseInt(savedColor.slice(5, 7), 16);
-        document.documentElement.style.setProperty('--montera-red-rgb', `${r}, ${g}, ${b}`);
-    }
-
-    // Jalankan sinkronisasi saat load
-    syncNavbarTheme();
-
+    // FUNGSI LOGOUT
     function showLogoutConfirm(e) {
         e.preventDefault();
         document.getElementById('logoutOverlay').classList.add('active');
@@ -188,6 +176,7 @@
         document.getElementById('logout-form').submit();
     }
 
+    // TUTUP MODAL JIKA KLIK LUAR
     window.addEventListener('click', function(e) {
         const overlay = document.getElementById('logoutOverlay');
         if (e.target == overlay) hideLogoutConfirm();

@@ -1,16 +1,4 @@
 <style>
-    /* RESET LINK UNTUK LOGO */
-    .logo-link { 
-        text-decoration: none; 
-        display: flex; 
-        align-items: center; 
-        transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .logo-link:active { 
-        transform: scale(0.95); 
-        opacity: 0.8; 
-    }
-
     header { 
         padding: 20px 25px; 
         display: flex; 
@@ -29,18 +17,14 @@
     .logo-section { display: flex; align-items: center; gap: 12px; }
     .logo-img { 
         width: 42px; height: 42px; object-fit: contain; 
-        /* Glow logo mengikuti warna tema */
+        /* Shadow logo mengikuti warna tema */
         filter: drop-shadow(0 0 8px rgba(var(--montera-red-rgb, 211, 47, 47), 0.3)); 
     }
-    .brand-name h1 { 
-        font-size: 1.1rem; font-weight: 900; letter-spacing: -1px; 
-        margin: 0; color: white; line-height: 1; 
-    }
+    .brand-name h1 { font-size: 1.1rem; font-weight: 900; letter-spacing: -1px; margin-bottom: -4px; color: white; }
     .brand-name p { 
         font-size: 0.55rem; 
         color: var(--montera-red); /* Berubah dinamis */
         font-weight: 800; letter-spacing: 2px; text-transform: uppercase; 
-        margin: 4px 0 0 0;
     }
     
     /* Profile Wrapper */
@@ -73,14 +57,14 @@
         display: flex; 
         align-items: center; 
         justify-content: center; 
-        color: var(--montera-red); /* Inisial ikut warna tema */
+        color: var(--montera-red); /* Inisial nama ikut warna tema */
         font-weight: 800;
         font-size: 14px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         transition: 0.3s;
     }
 
-    /* DROPDOWN MENU */
+    /* DROPDOWN MENU MEWAH */
     .profile-dropdown {
         position: absolute;
         top: 60px;
@@ -120,22 +104,20 @@
     .dropdown-item i { width: 16px; color: #555; transition: 0.3s; }
     .dropdown-item:hover, .dropdown-item:active { background: #1f1f1f; color: white; }
     
-    /* Hover ikon ikut tema */
+    /* Hover ikon ikut personalisasi */
     .dropdown-item:hover i { color: var(--montera-red); }
 
     .dropdown-divider { height: 1px; background: #222; margin: 8px 10px; }
 </style>
 
 <header>
-    <a href="{{ route('home') }}" class="logo-link">
-        <div class="logo-section">
-            <img src="{{ asset('img/logo-montera.png') }}" alt="M" class="logo-img">
-            <div class="brand-name">
-                <h1>MONTERA</h1>
-                <p>Premium</p>
-            </div>
+    <div class="logo-section">
+        <img src="{{ asset('img/logo-montera.png') }}" alt="M" class="logo-img">
+        <div class="brand-name">
+            <h1>MONETRA</h1>
+            <p>Premium</p>
         </div>
-    </a>
+    </div>
 
     @auth
     <div class="profile-wrapper">
@@ -168,26 +150,26 @@
     @endauth
 
     @guest
-    <a href="{{ route('login') }}" style="color: var(--montera-red); font-size: 1.5rem;">
-        <i class="fa-solid fa-circle-user"></i>
+    <a href="{{ route('login') }}" class="profile-btn">
+        <i class="fa-solid fa-user-circle"></i>
     </a>
     @endguest
 </header>
 
 <script>
-    // FUNGSI TEMA GLOBAL UNTUK HEADER
+    // FUNGSI TEMA UNTUK HEADER (Ambil dari LocalStorage)
     function syncHeaderTheme() {
         const savedColor = localStorage.getItem('montera_theme_red') || '#D32F2F';
         document.documentElement.style.setProperty('--montera-red', savedColor);
         
-        // Konversi HEX ke RGB untuk efek Shadow Logo
+        // Konversi ke RGB untuk efek Glow pada Logo
         const r = parseInt(savedColor.slice(1, 3), 16);
         const g = parseInt(savedColor.slice(3, 5), 16);
         const b = parseInt(savedColor.slice(5, 7), 16);
         document.documentElement.style.setProperty('--montera-red-rgb', `${r}, ${g}, ${b}`);
     }
 
-    // Jalankan sinkronisasi
+    // Jalankan saat load
     syncHeaderTheme();
 
     function toggleDropdown(event) {
@@ -195,7 +177,7 @@
         document.getElementById('profileDropdown').classList.toggle('active');
     }
 
-    // Klik di luar dropdown untuk menutup
+    // Tutup dropdown jika klik di mana saja
     window.addEventListener('click', function() {
         const dropdown = document.getElementById('profileDropdown');
         if (dropdown && dropdown.classList.contains('active')) {
