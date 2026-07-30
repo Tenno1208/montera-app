@@ -2,27 +2,41 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$app=require_once __DIR__.'/../bootstrap/app.php';
 
 echo "<pre>";
 
+echo "CONFIG EXISTS : ";
+var_dump(file_exists(
+__DIR__.'/../config/app.php'
+));
+
+echo "<br>";
+
+echo "PROVIDERS EXISTS : ";
+var_dump(file_exists(
+__DIR__.'/../bootstrap/providers.php'
+));
+
+echo "<br>";
+
+echo "APP EXISTS : ";
+var_dump(file_exists(
+__DIR__.'/../bootstrap/app.php'
+));
+
+echo "<br>";
+
+echo "CONTAINER CONFIG : ";
+
 try{
 
-    echo "VIEW : ";
-    var_dump($app->make('view'));
+var_dump($app->make("config"));
 
 }catch(Throwable $e){
 
-    echo "<h2>ERROR NIH BOS</h2>";
-
-    echo $e->getMessage();
-
-    echo "<br><br>";
-
-    echo $e->getFile();
-
-    echo "<br><br>";
-
-    echo $e->getLine();
+echo $e->getMessage();
 
 }
+
+die();
