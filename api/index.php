@@ -6,14 +6,20 @@ $app=require_once __DIR__.'/../bootstrap/app.php';
 
 echo "<pre>";
 
-var_dump($app->bound('view'));
+echo "services.php : ";
+
+var_dump(
+file_exists(
+__DIR__."/../bootstrap/cache/services.php"
+));
 
 echo "<br>";
 
-var_dump($app->bound('router'));
+echo "packages.php : ";
 
-echo "<br>";
-
-var_dump($app->bound('config'));
+var_dump(
+file_exists(
+__DIR__."/../bootstrap/cache/packages.php"
+));
 
 die();
