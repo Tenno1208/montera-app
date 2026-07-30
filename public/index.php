@@ -1,42 +1,20 @@
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 
-$app=require_once __DIR__.'/../bootstrap/app.php';
+define('LARAVEL_START', microtime(true));
 
-echo "<pre>";
-
-echo "CONFIG EXISTS : ";
-var_dump(file_exists(
-__DIR__.'/../config/app.php'
-));
-
-echo "<br>";
-
-echo "PROVIDERS EXISTS : ";
-var_dump(file_exists(
-__DIR__.'/../bootstrap/providers.php'
-));
-
-echo "<br>";
-
-echo "APP EXISTS : ";
-var_dump(file_exists(
-__DIR__.'/../bootstrap/app.php'
-));
-
-echo "<br>";
-
-echo "CONTAINER CONFIG : ";
-
-try{
-
-var_dump($app->make("config"));
-
-}catch(Throwable $e){
-
-echo $e->getMessage();
-
+// Determine if the application is in maintenance mode...
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+    require $maintenance;
 }
 
-die();
+// Register the Composer autoloader...
+require __DIR__.'/../vendor/autoload.php';
+
+// Bootstrap Laravel and handle the request...
+/** @var Application $app */
+$app = require_once __DIR__.'/../bootstrap/app.php';
+
+$app->handleRequest(Request::capture());
