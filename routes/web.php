@@ -50,3 +50,9 @@ Route::get('/jalankan-migrasi', function() {
     Artisan::call('migrate:fresh', ['--force' => true]);
     return "Database Berhasil Dimigrasi!";
 });
+
+Route::get("/test",function(){
+
+    return "BERHASIL";
+
+});
