@@ -6,13 +6,15 @@ use App\Http\Controllers\SavingsGoalController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get("/",function(){
+    return "
+    <h1>MONTERA HIDUP</h1>
+    ";
 });
 
 
+
 Route::middleware(['auth'])->group(function () {
-Route::get('/', [TransactionController::class, 'index'])->name('home');
 Route::post('/store', [TransactionController::class, 'store'])->name('store');
 Route::get('/laporan', [TransactionController::class, 'report'])->name('laporan');
 Route::get('/profil', [AuthController::class, 'showProfil'])->name('profil');
@@ -30,9 +32,6 @@ Route::put('/profil/keamanan/update', [AuthController::class, 'updateKeamanan'])
 
 
 // Landing Page (Halaman Utama)
-Route::get('/', function () {
-    return view('landing');
-})->name('landing');
 
 // Halaman Login & Register
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
