@@ -2,24 +2,26 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-$app=require_once __DIR__.'/../bootstrap/app.php';
+$app = require_once __DIR__.'/../bootstrap/app.php';
 
 echo "<pre>";
 
-echo "services.php : ";
-
-var_dump(
-file_exists(
-__DIR__."/../bootstrap/cache/services.php"
-));
+echo "VIEW : ";
+var_dump($app->bound('view'));
 
 echo "<br>";
 
-echo "packages.php : ";
+echo "ROUTER : ";
+var_dump($app->bound('router'));
 
-var_dump(
-file_exists(
-__DIR__."/../bootstrap/cache/packages.php"
-));
+echo "<br>";
+
+echo "CONFIG : ";
+var_dump($app->bound('config'));
+
+echo "<br>";
+
+echo "EVENT : ";
+var_dump($app->bound('events'));
 
 die();
