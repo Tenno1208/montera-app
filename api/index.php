@@ -1,27 +1,19 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require __DIR__.'/../vendor/autoload.php';
 
-try {
+$app=require_once __DIR__.'/../bootstrap/app.php';
 
-    require __DIR__ . '/../public/index.php';
+echo "<pre>";
 
-} catch (Throwable $e) {
+var_dump($app->bound('view'));
 
-    echo "<h1>ERROR NIH BOS</h1>";
+echo "<br>";
 
-    echo "<pre>";
-    echo "Pesan Error : ".$e->getMessage();
-    echo "\n\n";
+var_dump($app->bound('router'));
 
-    echo "File : ".$e->getFile();
-    echo "\n\n";
+echo "<br>";
 
-    echo "Baris : ".$e->getLine();
-    echo "\n\n";
+var_dump($app->bound('config'));
 
-    echo $e->getTraceAsString();
-    echo "</pre>";
-
-}
+die();
