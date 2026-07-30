@@ -6,22 +6,23 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 
 echo "<pre>";
 
-echo "VIEW : ";
-var_dump($app->bound('view'));
+try{
 
-echo "<br>";
+    echo "VIEW : ";
+    var_dump($app->make('view'));
 
-echo "ROUTER : ";
-var_dump($app->bound('router'));
+}catch(Throwable $e){
 
-echo "<br>";
+    echo "<h2>ERROR NIH BOS</h2>";
 
-echo "CONFIG : ";
-var_dump($app->bound('config'));
+    echo $e->getMessage();
 
-echo "<br>";
+    echo "<br><br>";
 
-echo "EVENT : ";
-var_dump($app->bound('events'));
+    echo $e->getFile();
 
-die();
+    echo "<br><br>";
+
+    echo $e->getLine();
+
+}
